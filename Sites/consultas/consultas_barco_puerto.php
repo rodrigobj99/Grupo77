@@ -8,7 +8,7 @@
   $barco = $_POST["barco"];
   $puerto = $_POST["puerto"];
 
- 	$query = "    ";
+ 	$query = "SELECT barcos.bnombre, puertos.punombre, permisos.pmatraque FROM PERMISOS, BARCOS, INSTALACIONES, PUERTOS WHERE permisos.inid = instalaciones.inid AND instalaciones.puid = puertos.puid AND barcos.bpatente = permisos.bpatente AND LOWER(barcos.bnombre) LIKE LOWER('%$barco%') AND LOWER(puertos.punombre) LIKE LOWER('%$puerto%')";
 	$result = $db -> prepare($query);
 	$result -> execute();
 	$pokemones = $result -> fetchAll();
@@ -16,11 +16,13 @@
 
 	<table>
     <tr>
-      <th>Jefe</th>
+      <th>Barco</th>
+      <th>Puerto</th>
+      <th>Fecha de Atraque</th>
     </tr>
   <?php
 	foreach ($pokemones as $pokemon) {
-  		echo "<tr> <td>$barco</td> <td> $puerto </td> </tr>";
+  		echo "<tr> <td> $pokemon[0] </td> <td> $pokemon[1] </td> <td> $pokemon[2] </td> </tr>";
 	}
   ?>
 	</table>
