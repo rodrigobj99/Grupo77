@@ -32,7 +32,7 @@
 
   <h3 align="center"> ¿Quieres encontrar todos los puertos con al menos un astillero ?</h3>
 
-  <form align="center" action="consultas/consulta_altura.php" method="post">
+  <form align="center" action="consultas/consulta_astillero_puertos.php" method="post">
     <br/><br/>
     <input type="submit" value="Buscar">
   </form>
