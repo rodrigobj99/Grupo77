@@ -7,7 +7,7 @@
 
   $nombre = $_POST["nombre_elegido"];
   //      select psnombre from personal, instalaciones, puertos where personal.inid = instalaciones.inid and personal.psesjefe = 'si' and puertos.puid = instalaciones.puid and puertos.punombre = 'Mejillones';
- 	$query = "select psnombre from personal, instalaciones, puertos where personal.inid = instalaciones.inid and personal.psesjefe = 'si' and puertos.puid = instalaciones.puid and puertos.punombre LIKE '%$nombre%';";
+ 	$query = "SELECT psnombre from personal, instalaciones, puertos where personal.inid = instalaciones.inid and personal.psesjefe = 'si' and puertos.puid = instalaciones.puid and puertos.punombre LIKE '%$nombre%';";
 	$result = $db -> prepare($query);
 	$result -> execute();
 	$pokemones = $result -> fetchAll();
@@ -15,7 +15,7 @@
 
 	<table>
     <tr>
-      <th>Jef</th>
+      <th>Jefe</th>
     </tr>
   <?php
 	foreach ($pokemones as $pokemon) {

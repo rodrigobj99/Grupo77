@@ -40,6 +40,16 @@
   <br>
   <br>
 
+  <h3 align="center"> ¿Quieres encontrar la edad promedio de cada puerto?</h3>
+
+  <form align="center" action="consultas/consulta_edad_promedio_puertos.php" method="post">
+    <br/><br/>
+    <input type="submit" value="Buscar">
+  </form>
+  <br>
+  <br>
+  <br>
+
   <h3 align="center">¿Quieres buscar todos los pokemones por tipo?</h3>
 
   <?php
