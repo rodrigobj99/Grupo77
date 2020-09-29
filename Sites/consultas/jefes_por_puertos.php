@@ -6,8 +6,8 @@
   require("../config/conexion.php");
 
   $nombre = $_POST["nombre_elegido"];
-  // select  psnombre from personal, instalaciones where personal.inid = instalaciones.inid and personal.psesjefe = ‘si’
- 	$query = "SELECT psnombre FROM personal, instalaciones, puertos WHERE personal.inid = instalciones.inid AND personal.psesjefe = 'si' AND puertos.puid = instalaciones.inid AND puertos.punombre LIKE '%$nombre%';";
+  //      select psnombre from personal, instalaciones, puertos where personal.inid = instalaciones.inid and personal.psesjefe = 'si' and puertos.puid = instalaciones.puid and puertos.punombre = 'Mejillones';
+ 	$query = "SELECT psnombre FROM personal, instalaciones, puertos WHERE personal.inid = instalciones.inid AND personal.psesjefe = 'si' AND puertos.puid = instalaciones.puid AND puertos.punombre LIKE '%$nombre%';";
 	$result = $db -> prepare($query);
 	$result -> execute();
 	$pokemones = $result -> fetchAll();
