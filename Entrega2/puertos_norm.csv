@@ -1,0 +1,44 @@
+puid,nombre_puerto,cuid,reid
+1,Quintero,1,1
+2,Puerto Montt,2,2
+3,Lirquen,3,3
+4,Ancud,4,2
+5,La Serena,5,4
+6,Chacabuco,6,5
+7,Castro,7,2
+8,Talcahuano,8,3
+9,Port Williams,9,6
+10,Mejillones,10,7
+11,Caleta Coloso,11,7
+12,Caldera,12,8
+13,Punta Patache,13,9
+14,Calderilla,12,8
+15,Huasco,14,8
+16,Puerto Angamos,10,7
+17,Isla Guarello,15,6
+18,Barquito,16,8
+19,Puerto Natales,17,6
+20,Cruz Grande,18,4
+21,Coquimbo,19,4
+22,Antofagasta,11,7
+23,Arica,20,10
+24,Penco,3,3
+25,Punta Arenas,21,6
+26,Quemchi,22,2
+27,Guayacan,19,4
+28,Quellon,23,2
+29,Iquique,13,9
+30,San Antonio,24,1
+31,Valparaiso,25,1
+32,Lota,26,3
+33,Taltal,27,7
+34,Cabo Negro,28,6
+35,Corral,29,11
+36,Balmaceda,30,5
+37,Puerto Chacabuco,6,5
+38,Caleta Patillos,13,9
+39,Coronel,31,3
+40,Valdivia,32,11
+41,San Vicente,33,12
+42,Isla de Pascua,34,1
+43,Tocopilla,35,7
