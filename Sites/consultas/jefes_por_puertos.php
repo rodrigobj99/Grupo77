@@ -15,7 +15,7 @@
 
 	<table>
     <tr>
-      <th>Jefes</th>
+      <th>Jefesito</th>
     </tr>
   <?php
 	foreach ($pokemones as $pokemon) {
