@@ -16,9 +16,9 @@
 
 	<table>
     <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Tipo</th>
+      <th>Puerto</th>
+      <th>Ciudad</th>
+
     </tr>
   <?php
 	foreach ($pokemones as $pokemon) {
