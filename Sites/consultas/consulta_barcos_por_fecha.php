@@ -27,4 +27,6 @@
   ?>
 	</table>
 
+  Si no aparece nada es porque no hubo movimiento portuario ese mes.
+
 <?php include('../templates/footer.html'); ?>
