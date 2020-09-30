@@ -66,5 +66,16 @@
   <br>
   <br>
 
+  <h3 align="center"> ¿Quieres saber el puerto que ha recibido mas barcos en Agosto del 2020?</h3>
+
+  <form align="center" action="consultas/consulta_barcos_por_fecha.php" method="post">
+    <br/><br/>
+    <input type="submit" value="Buscar">
+  </form>
+
+  <br>
+  <br>
+  <br>
+
 </body>
 </html>
