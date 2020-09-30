@@ -66,11 +66,11 @@
   <br>
   <br>
 
-  <h3 align="center"> ¿Quieres saber el puerto que ha recibido mas barcos en Agosto del 2020?</h3>
-
+  <h3 align="center"> ¿Quieres saber el puerto que ha recibido mas barcos en un mes espqcifico?</h3>
+  Recuerda ingrsar en fromato: yyyy-mm
   <form align="center" action="consultas/consulta_barcos_por_fecha.php" method="post">
     <br/><br/>
-    Mes:
+
     <input type="text" name="fecha">
     <br/><br/>
     <input type="submit" value="Buscar">
