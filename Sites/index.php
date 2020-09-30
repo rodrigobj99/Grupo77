@@ -67,7 +67,7 @@
   <br>
 
   <h3 align="center"> ¿Quieres saber el puerto que ha recibido mas barcos en un mes especifico?</h3>
-  Recuerda ingrsar en fromato: yyyy-mm
+  Recuerda ingresar la fecha en fromato: yyyy-mm
   <form align="center" action="consultas/consulta_barcos_por_fecha.php" method="post">
     <br/><br/>
 
