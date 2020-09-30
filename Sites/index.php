@@ -40,7 +40,7 @@
   <br>
   <br>
 
-  <h3 align="center"> ¿Quieres encontrar todass las veces que un barco ha atracado en una region?</h3>
+  <h3 align="center"> ¿Quieres encontrar todas las veces que un barco ha atracado en una region?</h3>
 
   <form align="center" action="consultas/consultas_barco_puerto.php" method="post">
     Nombre del Barco:
