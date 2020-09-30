@@ -7,8 +7,8 @@
 
   $barco = $_POST["barco"];
   $puerto = $_POST["puerto"];
-
- 	$query = "SELECT barcos.bnombre, puertos.punombre, permisos.pmatraque FROM PERMISOS, BARCOS, INSTALACIONES, PUERTOS WHERE permisos.inid = instalaciones.inid AND instalaciones.puid = puertos.puid AND barcos.bpatente = permisos.bpatente AND LOWER(barcos.bnombre) LIKE LOWER('%$barco%') AND LOWER(puertos.punombre) LIKE LOWER('%$puerto%')";
+// SELECT barcos.bnombre, puertos.punombre, ciudad.ciunombre, permisos.pmatraque FROM PERMISOS, BARCOS, INSTALACIONES, CIUDAD, PUERTOS WHERE permisos.inid = instalaciones.inid AND instalaciones.puid = puertos.puid AND barcos.bpatente = permisos.bpatente AND ciudad.ciuid = puertos.ciuid AND LOWER(barcos.bnombre) LIKE LOWER('%$barco%') AND LOWER(ciudad.ciunombre) LIKE LOWER('%$puerto%');
+ 	$query = "SELECT barcos.bnombre, puertos.punombre, ciudad.ciunombre, permisos.pmatraque FROM PERMISOS, BARCOS, INSTALACIONES, CIUDAD, PUERTOS WHERE permisos.inid = instalaciones.inid AND instalaciones.puid = puertos.puid AND barcos.bpatente = permisos.bpatente AND ciudad.ciuid = puertos.ciuid AND LOWER(barcos.bnombre) LIKE LOWER('%$barco%') AND LOWER(ciudad.ciunombre) LIKE LOWER('%$puerto%');";
 	$result = $db -> prepare($query);
 	$result -> execute();
 	$pokemones = $result -> fetchAll();
@@ -18,11 +18,12 @@
     <tr>
       <th>Barco</th>
       <th>Puerto</th>
+      <th>Region</th>
       <th>Fecha de Atraque</th>
     </tr>
   <?php
 	foreach ($pokemones as $pokemon) {
-  		echo "<tr> <td> $pokemon[0] </td> <td> $pokemon[1] </td> <td> $pokemon[2] </td> </tr>";
+  		echo "<tr> <td> $pokemon[0] </td> <td> $pokemon[1] </td> <td> $pokemon[2] </td> <td> $pokemon[3] </td></tr>";
 	}
   ?>
 	</table>

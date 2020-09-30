@@ -40,13 +40,13 @@
   <br>
   <br>
 
-  <h3 align="center"> ¿Quieres encontrar todass las veces que un barco ha atracado en un puerto?</h3>
+  <h3 align="center"> ¿Quieres encontrar todass las veces que un barco ha atracado en una region?</h3>
 
   <form align="center" action="consultas/consultas_barco_puerto.php" method="post">
     Nombre del Barco:
     <input type="text" name="barco">
     <br/><br/>
-    Nombre del Puerto:
+    Nombre de la region:
     <input type="text" name="puerto">
     <br/><br/>
     <input type="submit" value="Buscar">
