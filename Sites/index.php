@@ -70,6 +70,9 @@
 
   <form align="center" action="consultas/consulta_barcos_por_fecha.php" method="post">
     <br/><br/>
+    Mes:
+    <input type="text" name="fecha">
+    <br/><br/>
     <input type="submit" value="Buscar">
   </form>
 
