@@ -1,9 +1,9 @@
-CREATE OR REPLACE FUNCTION dias_disponibles (dia DATE) RETURNS TABLE (inid INTEGER, dia_disponible DATE, ocupacion_diaria FLOAT, intipo VARCHAR(100)) AS $$
+CREATE OR REPLACE FUNCTION dias_disponibles (dia DATE, puerto_id INTEGER) RETURNS TABLE (inid INTEGER, dia_disponible DATE, ocupacion_diaria FLOAT, intipo VARCHAR(100)) AS $$
 DECLARE
 tupla RECORD;
 ocupacion FLOAT;
 BEGIN
-FOR tupla IN SELECT * FROM Instalaciones LOOP
+FOR tupla IN SELECT * FROM Instalaciones WHERE instalaciones.puid = puerto_id LOOP
 ocupacion:= 0;
 IF tupla.intipo = 'astillero' THEN
 ocupacion := ocupacion + COUNT(permisos.pmatraque) FROM instalaciones,permisos,permisosastilleros WHERE tupla.inid = instalaciones.inid AND instalaciones.inid = permisos.inid AND permisos.pmid = permisosastilleros.pmid
