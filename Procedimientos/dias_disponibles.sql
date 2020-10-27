@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dias_disponibles (dia DATE) RETURNS TABLE (inid INTEGER, dia_disponible DATE, ocupacion_diaria FLOAT) AS $$
+CREATE OR REPLACE FUNCTION dias_disponibles (dia DATE) RETURNS TABLE (inid INTEGER, dia_disponible DATE, ocupacion_diaria FLOAT, intipo VARCHAR(100)) AS $$
 DECLARE
 tupla RECORD;
 ocupacion FLOAT;
@@ -14,6 +14,7 @@ END IF;
 inid := tupla.inid;
 dia_disponible := dia;
 ocupacion_diaria := ocupacion / tupla.incapacidad;
+intipo := tupla.intipo;
 RETURN NEXT;
 END LOOP;
 END
