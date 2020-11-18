@@ -9,10 +9,13 @@ DATABASE = "grupo24"
 URL = f"mongodb://{USER}:{PASS}@gray.ing.puc.cl/{DATABASE}?authSource=admin"
 client = MongoClient(URL)
 
+MESSAGE_KEYS = ['mid', 'message', 'sender', 'receptant', 'lat', 'long', 'date']
+
 db = client["grupo24"]
 
 usuarios = db.usuarios
 mensajes = db.mensajes
+test_search = db.text_search
 
 app = Flask(__name__)
 
@@ -66,7 +69,28 @@ def get_message(mid):
 
     return json.jsonify(message)
 
+@app.route('/messages', methods=['POST'])
+def new_message():
+    '''
+    Crea un mensaje recibiendo sus atributos
+    '''
+    data = {key: request.json[key] for key in MESSAGE_KEYS}
+    result = mensajes.insert_one(data)
+
+    return json.jsonify({'success': True})
+
+@app.route('/message/<int:mid>', methods=['DELETE'])
+def delete_message(mid):
+    '''
+    Elimina un mensaje, recibiendo un id
+    '''
+    mensajes.remove({"mid": mid})
+
+    return json.jsonify({'success': True})
+
 
 if __name__ == "__main__":
     app.run()
     app.run(debug=True)
+
+#python3 Entrega4/main.py
