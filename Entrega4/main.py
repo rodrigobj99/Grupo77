@@ -65,11 +65,14 @@ def get_messages():
     return json.jsonify(messages)
 
 @app.route("/users/<int:uid>")
+@app.route("/users/<int:uid>")
 def get_user(uid):
     '''
     Obtiene el usuario de id entregada
     '''
     user = list(usuarios.find({"uid": uid}, {"_id": 0}))
+    if len(user) == 0:
+        user = {"Error": "El uid ingresado no existe"}
 
     return json.jsonify(user)
 
@@ -79,6 +82,8 @@ def get_message(mid):
     Obtiene el mensaje de id entregada
     '''
     message = list(mensajes.find({"mid": mid}, {"_id": 0}))
+    if len(message) == 0:
+        message = {"Error": "El mid ingresado no existe"}
 
     return json.jsonify(message)
 
