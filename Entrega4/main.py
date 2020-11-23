@@ -10,7 +10,7 @@ DATABASE = "grupo24"
 URL = f"mongodb://{USER}:{PASS}@gray.ing.puc.cl/{DATABASE}?authSource=admin"
 client = MongoClient(URL)
 
-MESSAGE_KEYS = ['mid', 'message', 'sender', 'receptant', 'lat', 'long', 'date']
+MESSAGE_KEYS = ['message', 'sender', 'receptant', 'lat', 'long', 'date']
 
 db = client["grupo24"]
 
@@ -46,18 +46,33 @@ def get_messages():
     x = request.args.get("id1")
     y = request.args.get("id2")
     if x is not None and y is not None:
-        messages = list(mensajes.find({ '$and' :[{"receptant": x}, {"receptant": y}]}, {"_id": 0}))
+        messages = list(mensajes.find({'$or': [{'$and': [{"receptant": int(x)}, {"sender": int(y)}]}, {'$and': [{"receptant": int(y)}, {"sender": int(x)}]}]}, {"_id": 0}))
+        if len(messages) == 0:
+            messages = {"Error": "no hay mensajes entre estos ids"}
+        if len(list(usuarios.find({"uid": int(x)}, {"_id": 0}))) == 0 and len(list(usuarios.find({"uid": int(y)}, {"_id": 0}))) == 0:
+            messages = {"Error": "Los ids ingresados no existen"}
+        elif len(list(usuarios.find({"uid": int(x)}, {"_id": 0}))) == 0:
+            messages = {"Error": "El id1 ingresado no existe"}
+        elif len(list(usuarios.find({"uid": int(y)}, {"_id": 0}))) == 0:
+            messages = {"Error": "El id2 ingresado no existe"}
+    elif x is None and y is not None:
+        messages = {"Error": "no haz definido un id1 valido"}
+    elif x is not None and y is None:
+        messages = {"Error": "no haz definido un id2 valido"}
     else:
         messages = list(mensajes.find({}, {"_id": 0}))
 
     return json.jsonify(messages)
 
 @app.route("/users/<int:uid>")
+@app.route("/users/<int:uid>")
 def get_user(uid):
     '''
     Obtiene el usuario de id entregada
     '''
     user = list(usuarios.find({"uid": uid}, {"_id": 0}))
+    if len(user) == 0:
+        user = {"Error": "El uid ingresado no existe"}
 
     return json.jsonify(user)
 
@@ -67,6 +82,8 @@ def get_message(mid):
     Obtiene el mensaje de id entregada
     '''
     message = list(mensajes.find({"mid": mid}, {"_id": 0}))
+    if len(message) == 0:
+        message = {"Error": "El mid ingresado no existe"}
 
     return json.jsonify(message)
 
@@ -75,28 +92,57 @@ def new_message():
     '''
     Crea un mensaje recibiendo sus atributos
     '''
-    data = {key: request.json[key] for key in MESSAGE_KEYS}
-    result = mensajes.insert_one(data)
-
-    return json.jsonify({'success': True})
+    json_data = request.get_json(force=True)
+    allmessages = list(db.mensajes.find().sort("mid"))
+    idmax = allmessages[-1]['mid']
+    newid = idmax + 1
+    a = True
+    for key in MESSAGE_KEYS:
+        if key not in json_data:
+            a = False
+            mensaje_error = 'No hay '+key+' ingresado'
+            return json.jsonify({'error': mensaje_error})
+    if a:
+        id = db.mensajes.insert(
+            {'date': json_data['date'],
+            'lat': json_data['lat'],
+            'long': json_data['long'],
+            'message': json_data['message'],
+            'mid': newid,
+            'receptant': json_data['receptant'],
+            'sender': json_data['sender']})
+        return json.jsonify({'success': True})
 
 @app.route('/message/<int:mid>', methods=['DELETE'])
 def delete_message(mid):
     '''
     Elimina un mensaje, recibiendo un id
     '''
-    mensajes.remove({"mid": mid})
-
-    return json.jsonify({'success': True})
+    allmessages = list(db.mensajes.find().sort("mid"))
+    a = True
+    for i in allmessages:
+        if i['mid'] == mid:
+            a = False
+            mensajes.remove({"mid": mid})
+            return json.jsonify({'success': True})
+    if a:
+        return json.jsonify({'success': False})
 
 
 @app.route("/text-search")
 def text_searching():
     contador = 0
+    try:
+        mensaje = request.get_json()
+    except Exception:
+        resultado = list(mensajes.find({}, {"_id": 0}))
+        return json.jsonify(resultado)
+
     mensaje = request.get_json()
     desired_legible = ""
     required_arreglado = ""
-    forbidden_arreglado = ""
+    forbidden_legible = ""
+
     bool_f = False
     bool_r = False
     bool_d = False
@@ -160,7 +206,9 @@ def text_searching():
             if bool_i:
                 mensajes_usuario = list(mensajes.find({"sender": id_usuario}, {"_id": 0}))
             else:
-                mensajes_con_forbidden = list(mensajes.find({"$text": {"$search": forbidden_arreglado}},{"_id": 0}))
+                mensajes_usuario = list(mensajes.find({}, {"_id": 0}))
+                
+            mensajes_con_forbidden = list(mensajes.find({"$text": {"$search": forbidden_arreglado}},{"_id": 0}))
             mensajes_forbidden = []
             for mensaje in mensajes_usuario:
                 con = 1
@@ -181,10 +229,16 @@ def text_searching():
 
     if bool_i:
         print("Con usuario")
-        resultado = list(mensajes.find({"$text": {"$search": text_search}, "sender": id_usuario}, {"_id": 0}))
+        if text_search == "":
+            resultado = list(mensajes.find({ "sender": id_usuario}, {"_id": 0}))
+        else:
+            resultado = list(mensajes.find({"$text": {"$search": text_search}, "sender": id_usuario}, {"_id": 0}))
     else:
         print("Sin usuario")
-        resultado = list(mensajes.find({"$text": {"$search": text_search}}, {"_id": 0}))
+        if text_search == "":
+            resultado = list(mensajes.find({}, {"_id": 0}))
+        else:
+            resultado = list(mensajes.find({"$text": {"$search": text_search}}, {"_id": 0}))
     print(text_search)
     return json.jsonify({"messages":resultado})
         
